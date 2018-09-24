@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+		<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css">	
+	</head>
+	<body>
+		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+	            mdl-layout--fixed-tabs">
+	  		<header class="mdl-layout__header">
+	   			<div class="mdl-layout__header-row">
+	      		<!-- Title -->
+	      			<span class="mdl-layout-title">Rayd8 Image Analysis Tool</span>
+	    		</div>
+	    <!-- Tabs -->
+	    		<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+	      			<a href="#fixed-tab-1" class="mdl-layout__tab is-active">OCT Analysis</a>
+	    		</div>
+	  		</header>
+	  		<div class="mdl-layout__drawer">
+	    		<span class="mdl-layout-title">Categories</span>
+	    		<nav class="mdl-navigation">
+	    			<a href="index.html" class="mdl-navigation__link">OCT Analysis</a>
+	      			<a href="ret.html" class="mdl-navigation__link">Retinal Analysis</a>
+	    		</nav>
+	  		</div>
+	  		<main class="mdl-layout__content">
+	   			<section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+	      			<div class="page-content">
+	      				<div style = "float: left; width: 98%; margin:5px; height: 100%; align-self: center; align-content: center;">
+	      					<div style="width: 98%; align-self: center; margin: 10px; height: 100%;">
+	      						<form action="/predict" method = "POST" enctype = "multipart/form-data">
+	      							<label for="input-file-now">Upload image here</label>
+                    				<input type="file" id="input-file-now" name = "file" accept=".png, .jpg, .jpeg" class="dropify" data-height="350" />
+                    				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="btn-predict" type = "submit" align = "center">
+								  Analyse
+								</button>
+                    			</form>
+                    			<br>
+                    			<!-- Accent-colored raised button with ripple -->
+								
+								
+								<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        						<script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
+						        <script>
+						            $(document).ready(function(){
+						                // Basic
+						                $('.dropify').dropify();
+
+						                // Translated
+						                $('.dropify-fr').dropify({
+						                    messages: {
+						                        default: 'Glissez-déposez un fichier ici ou cliquez',
+						                        replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+						                        remove:  'Supprimer',
+						                        error:   'Désolé, le fichier trop volumineux'
+						                    }
+						                });
+
+						                // Used events
+						                var drEvent = $('#input-file-events').dropify();
+
+						                drEvent.on('dropify.beforeClear', function(event, element){
+						                    return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+						                });
+
+						                drEvent.on('dropify.afterClear', function(event, element){
+						                    alert('File deleted');
+						                });
+
+						                drEvent.on('dropify.errors', function(event, element){
+						                    console.log('Has Errors');
+						                });
+
+						                var drDestroy = $('#input-file-to-destroy').dropify();
+						                drDestroy = drDestroy.data('dropify')
+						                $('#toggleDropify').on('click', function(e){
+						                    e.preventDefault();
+						                    if (drDestroy.isDropified()) {
+						                        drDestroy.destroy();
+						                    } else {
+						                        drDestroy.init();
+						                    }
+						                })
+						            });
+						        </script>
+	      					</div>		
+	      				</div>
+
+	      			</div>
+	    		</section>
+	  		</main>
+		</div>
+	</body>
+</html>
